@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Patient Details{% endblock %}
+
+{% block content %}
+<h1>Patient: {{ patient.name }}</h1>
+
+<p>Email: {{ patient.email }}</p>
+
+<a href="{{ url_for('views.doctor_prescribe', patient_id=patient.id) }}" class="btn">Write Prescription</a>
+
+<div class="card">
+    <h2>Files</h2>
+    <ul>
+        {% if files %}
+            {% for f in files %}
+                <li>
+                    {{ f.original_filename }} ({{ f.uploaded_at.strftime('%d-%m-%Y %H:%M') }})
+                    — <a href="{{ url_for('views.download_file', file_id=f.id) }}">Download</a>
+                </li>
+            {% endfor %}
+        {% else %}
+            <li>No files uploaded by patient.</li>
+        {% endif %}
+    </ul>
+</div>
+
+<div class="card">
+    <h2>Prescriptions</h2>
+    <ul>
+        {% if prescriptions %}
+            {% for p in prescriptions %}
+                <li>
+                    <strong>{{ p.created_at.strftime('%d-%m-%Y %H:%M') }}:</strong>
+                    {{ p.text }}
+                </li>
+            {% endfor %}
+        {% else %}
+            <li>No prescriptions yet.</li>
+        {% endif %}
+    </ul>
+</div>
+{% endblock %}

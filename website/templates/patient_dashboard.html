@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Patient Dashboard{% endblock %}
+
+{% block content %}
+<h1>Welcome, {{ current_user.name }}</h1>
+
+<div class="card">
+    <h2>Your Files</h2>
+    <a href="{{ url_for('views.patient_upload') }}" class="btn">Upload New File</a>
+    <ul>
+        {% if files %}
+            {% for file in files %}
+                <li>
+                    {{ file.original_filename }}
+                    ({{ file.uploaded_at.strftime('%d-%m-%Y %H:%M') }})
+                    — <a href="{{ url_for('views.download_file', file_id=file.id) }}">Download</a>
+                </li>
+            {% endfor %}
+        {% else %}
+            <li>No files uploaded yet.</li>
+        {% endif %}
+    </ul>
+</div>
+
+<div class="card">
+    <h2>Your Prescriptions</h2>
+    <ul>
+        {% if prescriptions %}
+            {% for p in prescriptions %}
+                <li>
+                    <strong>{{ p.created_at.strftime('%d-%m-%Y %H:%M') }}:</strong>
+                    {{ p.text }}
+                </li>
+            {% endfor %}
+        {% else %}
+            <li>No prescriptions yet.</li>
+        {% endif %}
+    </ul>
+</div>
+{% endblock %}

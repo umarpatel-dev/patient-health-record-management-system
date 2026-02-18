@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Doctor Dashboard{% endblock %}
+
+{% block content %}
+<h1>Doctor Dashboard</h1>
+
+<div class="card">
+
+    <form method="GET" action="{{ url_for('views.doctor_dashboard') }}">
+        <input type="text"
+               name="search"
+               placeholder="Search patients by name..."
+               value="{{ search_query }}"
+               style="width: 300px; padding: 8px;">
+        <button type="submit" class="btn">Search</button>
+        {% if search_query %}
+            <a href="{{ url_for('views.doctor_dashboard') }}" class="btn-red">Clear</a>
+        {% endif %}
+    </form>
+
+    <h2>Patients</h2>
+
+    <ul>
+        {% if patients %}
+            {% for p in patients %}
+                <li>
+                    {{ p.name }} — {{ p.email }}
+                    <a href="{{ url_for('views.doctor_patient_detail', patient_id=p.id) }}" class="btn">
+                        View Record
+                    </a>
+                </li>
+            {% endfor %}
+        {% else %}
+            <li>No patients found.</li>
+        {% endif %}
+    </ul>
+</div>
+
+{% endblock %}

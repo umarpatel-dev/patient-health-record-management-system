@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Register Doctor{% endblock %}
+
+{% block content %}
+  <h1>Register as Doctor</h1>
+  <form method="post">
+    <label>Name:
+      <input type="text" name="name" required>
+    </label><br><br>
+    <label>Email:
+      <input type="email" name="email" required>
+    </label><br><br>
+    <label>Password:
+      <input type="password" name="password" required>
+    </label><br><br>
+    <label>Confirm Password:
+      <input type="password" name="confirm_password" required>
+    </label><br><br>
+    <button type="submit">Register</button>
+  </form>
+{% endblock %}

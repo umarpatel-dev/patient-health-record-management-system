@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}My Prescriptions{% endblock %}
+{% block content %}
+<h1>My Prescriptions</h1>
+{% if prescriptions %}
+<ul>
+    {% for p in prescriptions %}
+    <li>
+        <strong>{{ p.created_at }}:</strong>
+        <pre class="prescription-text">{{ p.text }}</pre>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No prescriptions available.</p>
+{% endif %}
+{% endblock %}

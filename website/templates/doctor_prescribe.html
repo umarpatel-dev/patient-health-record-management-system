@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Write Prescription{% endblock %}
+
+{% block content %}
+<h1>Write Prescription for {{ patient.name }}</h1>
+
+<form method="post">
+    <label>Prescription text:</label><br><br>
+    <textarea name="text" rows="6" cols="60" required></textarea>
+    <br><br>
+    <button type="submit">Save Prescription</button>
+</form>
+
+<p>
+    <a href="{{ url_for('views.doctor_patient_detail', patient_id=patient.id) }}">
+        Back to patient details
+    </a>
+</p>
+{% endblock %}

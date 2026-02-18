@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}Patient Health Record{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <nav>
+        <a href="{{ url_for('views.index') }}">Home</a>
+
+        {% if current_user.is_authenticated %}
+            {% if current_user.role == 'patient' %}
+                <a href="{{ url_for('views.patient_dashboard') }}">Patient Dashboard</a>
+            {% elif current_user.role == 'doctor' %}
+                <a href="{{ url_for('views.doctor_dashboard') }}">Doctor Dashboard</a>
+            {% endif %}
+            <a href="{{ url_for('auth.logout') }}" class="btn-red">Logout</a>
+        {% else %}
+            <a href="{{ url_for('auth.login') }}">Login</a>
+            <a href="{{ url_for('auth.register_patient') }}">Register Patient</a>
+            <a href="{{ url_for('auth.register_doctor') }}">Register Doctor</a>
+        {% endif %}
+    </nav>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <ul>
+              {% for category, message in messages %}
+                <li><strong>{{ category.title() }}:</strong> {{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+</body>
+</html>

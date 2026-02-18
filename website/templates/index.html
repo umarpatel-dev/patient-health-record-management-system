@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome - Patient Health Record{% endblock %}
+
+{% block content %}
+<div class="home-container">
+
+    <h1>Patient Health Record Management System</h1>
+
+    <p class="subtitle">
+        A secure and easy way to manage patient medical records, prescriptions, and reports.
+    </p>
+
+    {% if not current_user.is_authenticated %}
+        <div class="home-buttons">
+            <a href="{{ url_for('auth.login') }}" class="btn home-btn">Login</a>
+            <a href="{{ url_for('auth.register_patient') }}" class="btn home-btn">Register as Patient</a>
+            <a href="{{ url_for('auth.register_doctor') }}" class="btn home-btn">Register as Doctor</a>
+        </div>
+    {% else %}
+        {% if current_user.role == 'patient' %}
+            <a href="{{ url_for('views.patient_dashboard') }}" class="btn home-btn">Go to Patient Dashboard</a>
+        {% else %}
+            <a href="{{ url_for('views.doctor_dashboard') }}" class="btn home-btn">Go to Doctor Dashboard</a>
+        {% endif %}
+    {% endif %}
+
+</div>
+{% endblock %}
